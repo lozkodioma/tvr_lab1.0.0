@@ -100,14 +100,14 @@ class ContactManager {
 
 const manager = new ContactManager();
 
-const nameRegex = /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ\s'-]{2,50}$/;
+const nameRegex = /^[a-zA-Zа-яА-ЯіІїЇєЄґҐ0-9\s'-]{2,50}$/;
 const phoneRegex = /^(\+?380|0)\d{9}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validateName(value) {
     const val = value.trim();
     if (!val) return "Введіть ім'я";
-    if (!nameRegex.test(val)) return "Ім'я має містити від 2 літер (без цифр і спецсимволів)";
+    if (!nameRegex.test(val)) return "Ім'я має містити від 2 символів (літери, цифри, дефіс)";
     return "";
 }
 
@@ -263,7 +263,7 @@ contactForm.addEventListener("submit", (e) => {
 
     manager.add({
         name: nameInput.value,
-        phone: phoneInput.value,
+        phone: phoneInput.value.trim().replace(/[\s\-()]/g, ""),
         email: emailInput.value,
         category: categoryInput.value,
         notes: notesInput.value
@@ -347,7 +347,7 @@ editForm.addEventListener("submit", (e) => {
 
     manager.update(editId.value, {
         name: editName.value,
-        phone: editPhone.value,
+        phone: editPhone.value.trim().replace(/[\s\-()]/g, ""),
         email: editEmail.value,
         category: editCategory.value,
         notes: editNotes.value
@@ -356,6 +356,10 @@ editForm.addEventListener("submit", (e) => {
     closeModal();
     render();
 });
+
+editName.addEventListener("input", () => applyFieldValidation(editName, editNameError, validateName(editName.value)));
+editPhone.addEventListener("input", () => applyFieldValidation(editPhone, editPhoneError, validatePhone(editPhone.value)));
+editEmail.addEventListener("input", () => applyFieldValidation(editEmail, editEmailError, validateEmail(editEmail.value)));
 
 function initTheme() {
     const saved = localStorage.getItem("app_theme") || "light";
