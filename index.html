@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система управління контактами | ЛР1 ТВР</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-inner">
+            <h1>Книга контактів</h1>
+            <div class="header-tools">
+                <span id="totalBadge" class="badge">Всього: 0</span>
+                <button type="button" id="themeBtn" class="btn btn-outline">Тема</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <section class="card form-section">
+            <h2>Новий контакт</h2>
+            <form id="contactForm" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nameInput">Ім'я / ПІБ *</label>
+                        <input type="text" id="nameInput" placeholder="Тарас або Шевченко Тарас">
+                        <small class="error-msg" id="nameError"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneInput">Телефон *</label>
+                        <input type="tel" id="phoneInput" placeholder="+380XXXXXXXXX або 0XXXXXXXXX">
+                        <small class="error-msg" id="phoneError"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailInput">Email (необов'язково)</label>
+                        <input type="email" id="emailInput" placeholder="user@example.com">
+                        <small class="error-msg" id="emailError"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoryInput">Категорія</label>
+                        <select id="categoryInput">
+                            <option value="Родина">Родина</option>
+                            <option value="Робота">Робота</option>
+                            <option value="Друзі">Друзі</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notesInput">Нотатки</label>
+                    <input type="text" id="notesInput" placeholder="Додаткова інформація">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Додати контакт</button>
+                    <button type="reset" class="btn btn-outline">Очистити</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="card controls-section">
+            <div class="controls-row">
+                <input type="search" id="searchInput" placeholder="Пошук за ім'ям або номером...">
+                <div class="filter-wrap">
+                    <label for="categoryFilter">Категорія:</label>
+                    <select id="categoryFilter">
+                        <option value="all">Усі</option>
+                        <option value="Родина">Родина</option>
+                        <option value="Робота">Робота</option>
+                        <option value="Друзі">Друзі</option>
+                    </select>
+                </div>
+                <div class="filter-wrap">
+                    <label for="sortSelect">Сортування:</label>
+                    <select id="sortSelect">
+                        <option value="category">За категорією</option>
+                        <option value="name-asc">Ім'я (А-Я)</option>
+                        <option value="name-desc">Ім'я (Я-А)</option>
+                        <option value="newest">Спершу нові</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="contacts-section">
+            <div id="contactsContainer"></div>
+            <p id="emptyMsg" class="empty-msg" hidden>Контактів не знайдено.</p>
+        </section>
+    </main>
+
+    <div id="editModal" class="modal" hidden>
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content card">
+            <h3>Редагування контакту</h3>
+            <form id="editForm" novalidate>
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label for="editName">Ім'я *</label>
+                    <input type="text" id="editName">
+                    <small class="error-msg" id="editNameError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="editPhone">Телефон *</label>
+                    <input type="tel" id="editPhone">
+                    <small class="error-msg" id="editPhoneError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail">
+                    <small class="error-msg" id="editEmailError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="editCategory">Категорія</label>
+                    <select id="editCategory">
+                        <option value="Родина">Родина</option>
+                        <option value="Робота">Робота</option>
+                        <option value="Друзі">Друзі</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editNotes">Нотатки</label>
+                    <input type="text" id="editNotes">
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Зберегти</button>
+                    <button type="button" id="closeModalBtn" class="btn btn-outline">Скасувати</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <p>Лабораторна робота №1 з ТВР | Студент: Лозко Дмитро (КІУКІ-23-7)</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
