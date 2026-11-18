@@ -1,2 +1,6 @@
 *.pdf
 *.docx
+*.tmp
+~*
+ЗВІТ_ДЛЯ_WORD.txt
+README_CODE_EXPLANATION.md
